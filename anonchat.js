@@ -41,12 +41,38 @@ if (Meteor.is_client) {
       var message = $('#messageBox').val();
       var ts = Date.now() / 1000;
       Messages.insert({message: message, time: ts});
+      // clear up the message box
       $('#messageBox').val('');
     }
   });
 
   Template.messages.messages = function () {
-    var messages = Messages.find({}, { sort: {time: -1} }).fetch();
-    return messages.slice(0,10);
+    var limit = 20;
+    var all_messages = Messages.find({}, { sort: {time: -1} }).fetch();
+    var to_retain = [];
+    messages = all_messages.slice(0,limit);
+
+    // check if all message count over limit
+    if(all_messages.length > limit) {
+      console.log("Messages in DB over the limit, about to delete some...");
+      // loop on messages to return
+      for(var x=0; x<=messages.length; x++) {
+        // check if we have a message
+        if(messages[x]) {
+          console.log("Retaining message with id: " + messages[x]._id);
+          to_retain.push(messages[x]._id);
+        } // end check if we have a message
+      } // end loop on messages to return
+
+      // check if we need to delete extra messages
+      if(to_retain.length > 0) {
+        console.log("removing some messages");
+        Messages.remove({_id: {$nin: to_retain} });
+      } // end check if we need to delete extra messages
+    } // end check if all message count over limit
+
+    console.log("Total messages: " + Messages.find({}).count());
+    
+    return messages;
   };
 }
