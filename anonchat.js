@@ -46,6 +46,7 @@ if (Meteor.is_client) {
   });
 
   Template.messages.messages = function () {
-    return Messages.find({}, { sort: {time: -1} });
+    var messages = Messages.find({}, { sort: {time: -1} }).fetch();
+    return messages.slice(0,10);
   };
 }
