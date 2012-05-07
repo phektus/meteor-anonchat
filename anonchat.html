@@ -1,0 +1,22 @@
+<head>
+  <title>Anon Chat</title>
+</head>
+
+<body>
+  {{> entry}}
+  {{> messages}}
+</body>
+
+<template name="entry">
+	<p><input type="text" id="messageBox" placeholder="Your Message" /></p>
+</template>
+
+<template name="messages">
+	{{# each messages}}
+		{{> message}}
+	{{/each}}
+</template>
+
+<template name="message">
+	<p><strong>Anonymous</strong>: {{message}}</p>
+</template>
