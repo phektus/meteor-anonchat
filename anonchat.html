@@ -12,11 +12,15 @@
 </template>
 
 <template name="messages">
-	{{# each messages}}
-		{{> message}}
-	{{/each}}
+	<div id="messages">
+		{{# each messages}}
+			{{> message}}
+		{{/each}}
+	</div>
 </template>
 
 <template name="message">
-	<p><strong>Anonymous</strong>: {{message}}</p>
+	<div id="message">
+		<strong>Anonymous</strong>: {{message}}
+	</div>
 </template>

@@ -47,7 +47,7 @@ if (Meteor.is_client) {
   });
 
   Template.messages.messages = function () {
-    var limit = 20;
+    var limit = 50;
     var all_messages = Messages.find({}, { sort: {time: -1} }).fetch();
     var to_retain = [];
     messages = all_messages.slice(0,limit);
